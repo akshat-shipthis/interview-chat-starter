@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.auth.router import router as auth_router
 from app.config import settings
 from app.db import client
+from app.messages.router import router as messages_router
+from app.messages.websocket import websocket_endpoint
 from app.users.router import router as users_router
 
 
@@ -27,3 +29,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(messages_router)
+
+
+app.websocket("/ws")(websocket_endpoint)

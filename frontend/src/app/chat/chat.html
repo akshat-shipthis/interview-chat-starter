@@ -1,0 +1,74 @@
+<section class="chat-layout">
+  <!-- Sidebar: user/contact list -->
+  <aside class="sidebar">
+    <h2 class="sidebar-title">Contacts</h2>
+    <ul class="contact-list">
+      @for (user of users(); track user.id) {
+        <li>
+          <button
+            class="contact-item"
+            [class.active]="selectedUser()?.id === user.id"
+            (click)="selectUser(user)"
+          >
+            <span class="avatar">{{ user.initials }}</span>
+            <span class="contact-name">{{ user.name }}</span>
+            @if (unreadCounts()[user.id]) {
+              <span class="badge">{{ unreadCounts()[user.id] }}</span>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <!-- Main chat area -->
+  <main class="chat-main">
+    @if (selectedUser(); as partner) {
+      <header class="chat-header">
+        <span class="avatar">{{ partner.initials }}</span>
+        <span class="chat-header-name">{{ partner.name }}</span>
+      </header>
+
+      <div class="message-list" #messageList>
+        @if (sendError()) {
+          <div class="alert alert-error">{{ sendError() }}</div>
+        }
+        @for (msg of messages(); track msg.id) {
+          <div class="message-row" [class.own]="msg.sender_id === currentUserId()">
+            <div class="message-bubble">
+              <p class="message-text">{{ msg.text }}</p>
+              <time class="message-time">{{ formatTime(msg.created_at) }}</time>
+            </div>
+          </div>
+        }
+        @empty {
+          <p class="empty-hint text-muted">No messages yet. Say hello!</p>
+        }
+      </div>
+
+      <form class="compose-bar" (ngSubmit)="sendMessage()">
+        <input
+          class="input compose-input"
+          type="text"
+          placeholder="Type a message…"
+          [ngModel]="draft()"
+          (ngModelChange)="draft.set($event)"
+          name="draft"
+          autocomplete="off"
+        />
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!draft().trim()"
+        >
+          Send
+        </button>
+      </form>
+    } @else {
+      <div class="no-chat">
+        <p class="text-muted">Select a contact to start chatting.</p>
+      </div>
+    }
+  </main>
+</section>
+
