@@ -1,12 +1,16 @@
 # Interview Chat — starter repo
 
-An Angular frontend with login already working, and a choice of two equivalent backends on
-MongoDB: FastAPI (`backend/`) or NestJS (`backend-nest/`).
+Login already works end to end. Pick one frontend and one backend; each pair is equivalent:
+
+- Frontend: Angular (`frontend/`) or React (`frontend-react/`), on port 4200
+- Backend: FastAPI (`backend/`) or NestJS (`backend-nest/`), on port 8000, using MongoDB
 The task is shared separately.
 
 ---
 
 ## 1. Setup
+
+Every command below works on macOS (Terminal) and Windows (PowerShell).
 
 ### Prerequisites
 
@@ -67,12 +71,22 @@ npm run start:dev
 
 ### Frontend — http://localhost:4200
 
-In a second terminal:
+In a second terminal, run **one** of the two frontends.
+
+**Angular:**
 
 ```bash
 cd frontend
 npm install
 npm start
+```
+
+**React:**
+
+```bash
+cd frontend-react
+npm install
+npm run dev
 ```
 
 Open http://localhost:4200 and sign in with any account below.
@@ -81,7 +95,7 @@ Open http://localhost:4200 and sign in with any account below.
 
 - FastAPI: `uv run ruff check .`
 - NestJS: `npm run lint`
-- Frontend: `npm run lint`
+- Angular / React: `npm run lint`
 
 ---
 
@@ -154,6 +168,15 @@ frontend/src/
     users/                User model and UserService
     login/                login page
     chat/                 empty page
+frontend-react/src/
+  environment.ts          apiUrl
+  styles.css              same design tokens and shared classes as the Angular app
+  main.tsx                routes: /login, /chat, everything else redirects
+  api/http.ts             fetch wrapper
+  auth/                   AuthProvider, useAuth, RequireAuth, token storage
+  users/                  User type and getUsers
+  layout/                 header
+  pages/                  Login, Chat (empty page)
 ```
 
 ---
@@ -164,6 +187,6 @@ frontend/src/
   (`brew services start mongodb-community` on macOS) or point `MONGO_URL` in the backend's `.env` at it.
 - **Port 8000 is taken:** run uvicorn with another `--port` (NestJS: set `PORT` in
   `backend-nest/.env`), then update `apiUrl` in
-  `frontend/src/environments/environment.ts` to match.
-- **Port 4200 is taken:** run `npm start -- --port <port>` and set `FRONTEND_ORIGIN` in
+  `frontend/src/environments/environment.ts` (React: `frontend-react/src/environment.ts`) to match.
+- **Port 4200 is taken:** run `npm start -- --port <port>` (React: `npm run dev -- --port <port>`) and set `FRONTEND_ORIGIN` in
   the backend's `.env` to `http://localhost:<port>`.
