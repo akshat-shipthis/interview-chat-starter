@@ -1,0 +1,25 @@
+[project]
+name = "interview-backend"
+version = "0.1.0"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+  "fastapi>=0.141.1",
+  "uvicorn[standard]>=0.53.0",
+  "pymongo>=4.18.1",
+  "pydantic-settings>=2.15.0",
+  "pyjwt>=2.14.0",
+  "bcrypt>=5.0.0",
+  "email-validator>=2.3.0",
+]
+
+[dependency-groups]
+dev = [
+  "ruff>=0.16.8",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

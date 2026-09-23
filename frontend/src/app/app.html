@@ -1,0 +1,14 @@
+@if (currentUser(); as user) {
+  <header class="topbar">
+    <span class="brand">
+      <span class="brand-mark" aria-hidden="true">IC</span>
+      Interview Chat
+    </span>
+    <div class="topbar-user">
+      <span class="avatar" aria-hidden="true">{{ user.initials }}</span>
+      <span class="topbar-name">{{ user.name }}</span>
+      <button class="btn btn-secondary btn-sm" type="button" (click)="logout()">Sign out</button>
+    </div>
+  </header>
+}
+<router-outlet />

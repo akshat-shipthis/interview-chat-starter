@@ -1,0 +1,63 @@
+<div class="login-page">
+  <section class="card login-card">
+    <header class="login-header">
+      <span class="brand-mark brand-mark-lg" aria-hidden="true">IC</span>
+      <h1>Sign in</h1>
+      <p class="text-muted">Use any of the seeded accounts listed in the README.</p>
+    </header>
+
+    @if (errorMessage(); as message) {
+      <div class="alert alert-error" role="alert">{{ message }}</div>
+    }
+
+    <form class="login-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="field">
+        <label class="label" for="email">Email</label>
+        <input
+          id="email"
+          class="input"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="aarti@example.com"
+          [attr.aria-invalid]="showError('email')"
+          aria-describedby="email-error"
+        />
+        @if (showError('email')) {
+          <p id="email-error" class="field-error">
+            @if (form.controls.email.hasError('required')) {
+              Email is required.
+            } @else {
+              Enter a valid email address.
+            }
+          </p>
+        }
+      </div>
+
+      <div class="field">
+        <label class="label" for="password">Password</label>
+        <input
+          id="password"
+          class="input"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          [attr.aria-invalid]="showError('password')"
+          aria-describedby="password-error"
+        />
+        @if (showError('password')) {
+          <p id="password-error" class="field-error">Password is required.</p>
+        }
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit" [disabled]="submitting()">
+        @if (submitting()) {
+          <span class="spinner" aria-hidden="true"></span>
+          Signing in…
+        } @else {
+          Sign in
+        }
+      </button>
+    </form>
+  </section>
+</div>

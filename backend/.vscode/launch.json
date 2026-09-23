@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python : FastAPI (uvicorn)",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "module": "uvicorn",
+      "args": ["run:app", "--reload", "--port", "8000"],
+      "subProcess": true,
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    }
+  ]
+}
