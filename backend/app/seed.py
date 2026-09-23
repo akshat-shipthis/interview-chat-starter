@@ -29,6 +29,18 @@ async def seed() -> None:
         }
         for name, email in USERS
     )
+
+    # Set up conversations collection
+    await db.conversations.drop()
+    await db.conversations.create_index("participants")
+
+    # Set up messages collection
+    await db.messages.drop()
+    await db.messages.create_index([("sender_id", 1), ("receiver_id", 1)])
+    await db.messages.create_index([("receiver_id", 1), ("sender_id", 1)])
+    await db.messages.create_index("created_at")
+    await db.messages.create_index([("conversation_id", 1), ("created_at", 1)])
+
     await client.close()
     print(f"Seeded {len(USERS)} users into '{db.name}'. Password for all: {PASSWORD}")
 
