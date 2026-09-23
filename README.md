@@ -9,11 +9,11 @@ The task is shared separately.
 
 ### Prerequisites
 
-| Tool    | Version               | Check                                         |
-| ------- | --------------------- | --------------------------------------------- |
-| MongoDB | 8.x, on port 27017    | `mongosh --eval 'db.runCommand({ ping: 1 })'` |
-| uv      | any recent            | `uv --version`                                |
-| Node.js | 20.19+, 22.12+ or 24+ | `node --version`                              |
+| Tool    | Version               | Check                          |
+| ------- | --------------------- | ------------------------------ |
+| MongoDB | 8.x, on port 27017    | the seed step below succeeds   |
+| uv      | any recent            | `uv --version`                 |
+| Node.js | 20.19+, 22.12+ or 24+ | `node --version`               |
 
 You do not need to install Python yourself: `uv` downloads Python 3.14 on first sync.
 
@@ -80,7 +80,7 @@ Every user's password is `password123`.
 | Meera Iyer | meera@example.com |
 | Rohit Nair | rohit@example.com |
 
-`uv run python -m app.seed` resets the `users` collection. User ids stay the same.
+`uv run python -m app.seed` resets the `users` collection. Anyone signed in will need to sign in again.
 
 ---
 
@@ -98,7 +98,7 @@ Endpoints other than login expect `Authorization: Bearer <access_token>`.
 A `User` looks like:
 
 ```json
-{ "id": "66f000000000000000000001", "name": "Aarti Rao", "email": "aarti@example.com", "initials": "AR" }
+{ "id": "6710c3e2a4b5f1d2e3c4b5a6", "name": "Aarti Rao", "email": "aarti@example.com", "initials": "AR" }
 ```
 
 | Method | Path              | Body                  | Response                                        |
